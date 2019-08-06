@@ -9,7 +9,9 @@ Must have node/npm on machine
 #### Steps:
 ```
 git clone https://github.com/HarounAns/MangaReader.git
-cd manga_reader
+cd MangaReader
 npm install
 npm start
 ```
+
+A window should open up on your default browser taking you to the app!
