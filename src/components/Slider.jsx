@@ -41,14 +41,20 @@ export default class Slider extends React.Component {
 
     }
 
+    componentDidMount() {
+        // scroll to top when component renders
+        window.scrollTo(0, 0);
+    } 
+
     setVolume = (volume) => {
         this.setState({ volume: '' }, () => {
-            this.setState({volume});
-        }); 
+            this.setState({ volume });
+        });
     }
 
     createBook = () => {
-        const vol = this.state.book.short + "/volumes/" + this.state.volume + "/";
+        const vol = this.state.book.data[this.state.volume];
+        const driveUrl = 'https://drive.google.com/uc?id=';
         const style = {
             height: "100vh",
         };
@@ -63,46 +69,14 @@ export default class Slider extends React.Component {
 
         let book = [];
 
-        if (this.chapterMap[this.state.volume].front) {
+        for (let i in vol) {
             book.push(
                 <div style={style}>
-                    <img style={img} src={vol + "00_front.png"} />
+                    <img style={img} src={driveUrl + vol[i].id} />
                 </div>
             )
         }
-
-        for (let i = 1; i <= this.chapterMap[this.state.volume].lastPage; i++) {
-            if (i <= 9) {
-                book.push(
-                    <div style={style}>
-                        <img style={img} src={vol + "0" + i + ".png"} />
-                    </div>
-                )
-            } else {
-                book.push(
-                    <div style={style}>
-                        <img style={img} src={vol + i + ".png"} />
-                    </div>
-                )
-            }
-        }
-
-        if (this.chapterMap[this.state.volume].credits) {
-            book.push(
-                <div style={style}>
-                    <img style={img} src={vol + "00_credits.png"} />
-                </div>
-            )
-        }
-
-        if (this.chapterMap[this.state.volume].back) {
-            book.push(
-                <div style={style}>
-                    <img style={img} src={vol + "00_back.png"} />
-                </div>
-            )
-        }
-
+        
         return book;
     }
 
